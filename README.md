@@ -10,3 +10,17 @@ The exploit triggered and used a  Heap Overflow to leak kernel addresses and use
 
 ![exploit](https://i.imgur.com/pmVgqjm.png)
 
+A core file can simply be dumped by triggering a segmentation fault with ulimit set to `ulimit -c unlimited`, for example, using the following `C` code.
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+	__asm(".intel_syntax noprefix; xor rax, rax; call rax; .att_syntax");
+	return 0;
+}
+```
+When the  segmentation fault is triggered  `/tmp/bash` is created and where executed this returns a root shell.
+
+![exploit](https://i.imgur.com/YJa6zBH.png)
